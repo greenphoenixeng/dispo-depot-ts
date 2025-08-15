@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import config from "@/config";
-import { supabaseUserService } from "@/libs/supabase";
+import { insertIntoUsage, supabaseUserService } from "@/libs/supabase";
 
 import { SupabaseAdapter } from "@auth/supabase-adapter";
 import { updateUserAliasOnSupa } from "@/app/actions/supabase";
@@ -78,7 +78,6 @@ export const authOptions: NextAuthOptionsExtended = {
               name: user.name || '',
               has_access: false,
             });
-            console.log('User also added to custom users table');
           } catch (error) {
             console.error('Failed to add user to custom table:', error);
           }
@@ -89,6 +88,9 @@ export const authOptions: NextAuthOptionsExtended = {
           e
         );
       }
+
+
+      
     },
   },
   adapter: SupabaseAdapter({
